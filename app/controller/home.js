@@ -20,6 +20,13 @@ class HomeController extends Controller {
     async state() {
         const { ctx } = this
         let { t, ck } = ctx.request.body
+        const status = {
+            NEW: '请用阿里云盘 App 扫码',
+            SCANED: '请在手机上确认',
+            EXPIRED: '二维码已过期',
+            CANCELED: '已取消',
+            CONFIRMED: '已确认',
+        }
 
         if (t && ck) {
             let result = await stateQuery(ctx, { t, ck })
@@ -38,7 +45,7 @@ class HomeController extends Controller {
                 let refreshToken = resutData.refresh_token
                 success({ ctx, data: { access_token, refreshToken, expireTime, driverId } })
             } else {
-                success({ ctx, data: { qrCodeStatus: result.qrCodeStatus } })
+                success({ ctx, message: status[result.qrCodeStatus] })
             }
         } else {
             failure({ ctx, message: '参数错误' })
