@@ -8,6 +8,7 @@ const qrGenerate = async (ctx) => {
         dataType: 'json',
     })
     console.log(result.data)
+    return result.data.content.data
 }
 /**
  * 查询状态 获取二维码状态
@@ -32,6 +33,27 @@ const stateQuery = async (ctx, { t, ck }) => {
         },
     })
     console.log(result.data)
+    return result.data.content.data
 }
 
-module.exports = { qrGenerate, stateQuery }
+/**
+ * 刷新token
+ * @param {*} ctx
+ * @param {*} refresh_token
+ */
+const refreshToken = async (ctx, refresh_token) => {
+    let url = `https://auth.aliyundrive.com/v2/account/token`
+    let result = await ctx.curl(url, {
+        method: 'POST',
+        dataType: 'json',
+        data: {
+            grant_type: 'refresh_token',
+            app_id: 'pJZInNHN2dZWk8qg',
+            refresh_token,
+        },
+    })
+    console.log(result.data)
+    return result.data
+}
+
+module.exports = { qrGenerate, stateQuery, refreshToken }
