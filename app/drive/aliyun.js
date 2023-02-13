@@ -6,6 +6,10 @@ const qrGenerate = async (ctx) => {
     const result = await ctx.curl(url, {
         method: 'GET',
         dataType: 'json',
+        heaers: {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
+            origin: 'https://www.aliyundrive.com',
+        },
     })
     console.log(result.data)
     return result.data.content.data
@@ -30,6 +34,10 @@ const stateQuery = async (ctx, { t, ck }) => {
             bizParams: '',
             navlanguage: 'zh-CN',
             navPlatform: 'MacIntel',
+        },
+        heaers: {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36',
+            origin: 'https://www.aliyundrive.com',
         },
     })
     console.log(result.data)
